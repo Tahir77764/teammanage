@@ -98,23 +98,23 @@ export default function TeamsPage() {
       <Navbar />
       <div className="flex">
         <Sidebar />
-        <div className="flex-1 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 p-8">
+        <div className="flex-1 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 px-4 py-8 md:p-8">
           <div className="container-max">
-            <div className="flex items-center justify-between mb-10">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-10">
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <Users size={32} className="text-blue-600" />
-                  <h1 className="heading-1">Team Members</h1>
+                  <h1 className="heading-1 text-2xl md:text-5xl">Team Members</h1>
                 </div>
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-sm md:text-base max-w-full md:max-w-2xl leading-5 md:leading-6">
                   Add and manage members for your admin account. Only your members appear here and in task assignment.
                 </p>
               </div>
               <button
                 onClick={() => setShowForm(!showForm)}
-                className="btn-primary flex items-center gap-2"
+                className="btn-primary text-sm px-4 py-2 flex items-center gap-2 self-start md:self-auto"
               >
-                <UserPlus size={20} />
+                <UserPlus size={18} />
                 {showForm ? "Cancel" : "Add Member"}
               </button>
             </div>
@@ -198,48 +198,77 @@ export default function TeamsPage() {
                   </p>
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left">
-                    <thead>
-                      <tr className="border-b border-gray-200 text-sm text-gray-500">
-                        <th className="py-3 pr-4 font-semibold">Name</th>
-                        <th className="py-3 pr-4 font-semibold">Email</th>
-                        <th className="py-3 pr-4 font-semibold">Added</th>
-                        <th className="py-3 font-semibold text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {members.map((member) => (
-                        <tr
-                          key={member._id}
-                          className="border-b border-gray-100 hover:bg-gray-50 transition"
-                        >
-                          <td className="py-4 pr-4 font-medium text-gray-800">
-                            {member.name}
-                          </td>
-                          <td className="py-4 pr-4 text-gray-600">{member.email}</td>
-                          <td className="py-4 pr-4 text-sm text-gray-500">
-                            {member.createdAt
-                              ? new Date(member.createdAt).toLocaleDateString()
-                              : "—"}
-                          </td>
-                          <td className="py-4 text-right">
-                            <button
-                              type="button"
-                              onClick={() =>
-                                handleDeleteMember(member._id, member.name)
-                              }
-                              className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition"
-                            >
-                              <Trash2 size={16} />
-                              Remove
-                            </button>
-                          </td>
+                <>
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left">
+                      <thead>
+                        <tr className="border-b border-gray-200 text-sm text-gray-500">
+                          <th className="py-3 pr-4 font-semibold">Name</th>
+                          <th className="py-3 pr-4 font-semibold">Email</th>
+                          <th className="py-3 pr-4 font-semibold">Added</th>
+                          <th className="py-3 font-semibold text-right">Actions</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {members.map((member) => (
+                          <tr
+                            key={member._id}
+                            className="border-b border-gray-100 hover:bg-gray-50 transition"
+                          >
+                            <td className="py-4 pr-4 font-medium text-gray-800">
+                              {member.name}
+                            </td>
+                            <td className="py-4 pr-4 text-gray-600">{member.email}</td>
+                            <td className="py-4 pr-4 text-sm text-gray-500">
+                              {member.createdAt
+                                ? new Date(member.createdAt).toLocaleDateString()
+                                : "—"}
+                            </td>
+                            <td className="py-4 text-right">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleDeleteMember(member._id, member.name)
+                                }
+                                className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition"
+                              >
+                                <Trash2 size={16} />
+                                Remove
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="space-y-4 md:hidden">
+                    {members.map((member) => (
+                      <div
+                        key={member._id}
+                        className="border border-gray-200 bg-white rounded-2xl p-3 sm:p-4 shadow-sm"
+                      >
+                        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                          <div>
+                            <p className="text-base sm:text-lg font-semibold text-gray-900 truncate">{member.name}</p>
+                            <p className="text-xs sm:text-sm text-gray-600 mt-1 truncate">{member.email}</p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteMember(member._id, member.name)}
+                            className="inline-flex items-center gap-2 px-2 py-1 text-xs sm:text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition"
+                          >
+                            <Trash2 size={16} />
+                            Remove
+                          </button>
+                        </div>
+                        <div className="mt-4 text-sm text-gray-500">
+                          Added: {member.createdAt ? new Date(member.createdAt).toLocaleDateString() : "—"}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
               )}
             </div>
           </div>

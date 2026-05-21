@@ -106,7 +106,7 @@ export default function AdminDashboard() {
       <Navbar />
       <div className="flex">
         <Sidebar />
-        <div className="flex-1 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 p-8">
+        <div className="flex-1 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 px-4 py-8 md:p-8">
           <div className="container-max">
             {/* Header */}
             <div className="mb-12">
@@ -117,22 +117,22 @@ export default function AdminDashboard() {
             </div>
 
             {/* Stat Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
               {statCards.map((card, index) => {
                 const Icon = card.icon;
                 return (
                   <div
                     key={index}
-                    className={`bg-gradient-to-br ${card.bgGradient} text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in`}
+                    className={`bg-gradient-to-br ${card.bgGradient} text-white p-3 sm:p-4 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 animate-fade-in`}
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    <div className="flex items-start justify-between">
+                    <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-sm opacity-80">{card.label}</p>
-                        <p className="text-4xl font-bold mt-2">{card.value}</p>
-                        <p className="text-xs opacity-75 mt-3">{card.trend}</p>
+                        <p className="text-[10px] sm:text-xs opacity-80">{card.label}</p>
+                        <p className="text-2xl sm:text-3xl font-bold mt-1">{card.value}</p>
+                        <p className="text-[9px] sm:text-[10px] opacity-75 mt-2">{card.trend}</p>
                       </div>
-                      <Icon size={32} className="opacity-80" />
+                      <Icon size={24} className="opacity-80" />
                     </div>
                   </div>
                 );
@@ -158,10 +158,10 @@ export default function AdminDashboard() {
                       <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
                         <div
                           className={`h-full ${status.label === "Pending"
-                              ? "bg-yellow-400"
-                              : status.label === "In Progress"
-                                ? "bg-blue-400"
-                                : "bg-green-400"
+                            ? "bg-yellow-400"
+                            : status.label === "In Progress"
+                              ? "bg-blue-400"
+                              : "bg-green-400"
                             } transition-all duration-500`}
                           style={{
                             width:

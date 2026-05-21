@@ -78,20 +78,20 @@ export default function CreateTaskPage() {
         <div className="flex-1 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 p-8">
           <div className="container-max">
             {/* Header */}
-            <div className="mb-8">
-              <div className="flex items-center gap-3 mb-2">
-                <Plus size={32} className="text-blue-600" />
-                <h1 className="heading-1">Create New Task</h1>
+            <div className="mb-6">
+              <div className="flex items-center gap-2 mb-1">
+                <Plus size={24} className="text-blue-600" />
+                <h1 className="heading-1 text-xl sm:text-2xl md:text-5xl">Create New Task</h1>
               </div>
-              <p className="text-gray-600">Assign a task to team members</p>
+              <p className="text-gray-600 text-sm sm:text-base">Assign a task to team members</p>
             </div>
 
             {/* Form Card */}
-            <div className="card max-w-2xl animate-fade-in">
-              <form onSubmit={handleCreateTask} className="space-y-6">
+            <div className="card card-compact max-w-2xl animate-fade-in">
+              <form onSubmit={handleCreateTask} className="space-y-4 sm:space-y-5">
                 {/* Title Field */}
                 <div className="form-group">
-                  <label className="label">Task Title *</label>
+                  <label className="label text-xs sm:text-sm">Task Title *</label>
                   <input
                     type="text"
                     value={form.title}
@@ -99,7 +99,7 @@ export default function CreateTaskPage() {
                       setForm({ ...form, title: e.target.value })
                     }
                     placeholder="e.g., Design Homepage"
-                    className="input"
+                    className="input text-sm"
                     required
                     disabled={loading}
                   />
@@ -125,7 +125,7 @@ export default function CreateTaskPage() {
                   <label className="label">Assign To *</label>
                   <div className="relative">
                     <Users
-                      size={20}
+                      size={18}
                       className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                     />
                     <select
@@ -133,7 +133,7 @@ export default function CreateTaskPage() {
                       onChange={(e) =>
                         setForm({ ...form, assignedTo: e.target.value })
                       }
-                      className="input pl-10"
+                      className="input pl-10 text-sm"
                       required
                       disabled={loading}
                     >
@@ -154,31 +154,31 @@ export default function CreateTaskPage() {
 
                 {/* Deadline Field */}
                 <div className="form-group">
-                  <label className="label">Deadline</label>
+                  <label className="label text-xs sm:text-sm">Deadline</label>
                   <input
                     type="date"
                     value={form.deadline}
                     onChange={(e) =>
                       setForm({ ...form, deadline: e.target.value })
                     }
-                    className="input"
+                    className="input text-sm"
                     disabled={loading}
                   />
                 </div>
 
                 {/* Submit Button */}
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <button
                     type="submit"
                     disabled={loading}
-                    className="btn-primary flex-1 flex items-center justify-center gap-2 py-3"
+                    className="btn-primary flex-1 flex items-center justify-center gap-1 sm:gap-2 py-2 sm:py-3 text-sm"
                   >
-                    <Plus size={20} />
+                    <Plus size={18} />
                     {loading ? "Creating..." : "Create Task"}
                   </button>
                   <button
                     type="reset"
-                    className="btn-secondary px-6 py-3"
+                    className="btn-secondary px-4 py-2 sm:px-6 sm:py-3 text-sm"
                   >
                     Clear
                   </button>

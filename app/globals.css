@@ -307,6 +307,14 @@ body {
 
 /* Responsive Typography */
 @media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    font-size: 0.95rem;
+  }
+
   .heading-1 {
     @apply text-3xl;
   }
@@ -317,6 +325,19 @@ body {
 
   .heading-3 {
     @apply text-xl;
+  }
+
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger,
+  .btn-success,
+  .navbar-pill,
+  .navbar-link-hover,
+  .navbar-cta,
+  .input,
+  .badge {
+    font-size: 0.95rem;
   }
 }
 

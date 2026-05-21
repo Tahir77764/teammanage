@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { LogOut, Menu, X } from "lucide-react";
+import { LogOut } from "lucide-react";
 import Logo from "@/components/Logo";
 
 export default function Navbar({ variant = "default" }) {
   const isLanding = variant === "landing";
   const [user, setUser] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -33,7 +32,7 @@ export default function Navbar({ variant = "default" }) {
       const response = await fetch("/api/auth/logout", { method: "POST" });
       if (response.ok) {
         setUser(null);
-        router.push("/login");
+        router.push("/");
       }
     } catch (error) {
       console.error("Error logging out:", error);
@@ -52,11 +51,11 @@ export default function Navbar({ variant = "default" }) {
             href="/"
             size="sm"
             showText={true}
-            textClassName="text-xl font-bold hidden sm:inline"
+            textClassName="text-xl font-bold"
             variant="light"
           />
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className={`${isLanding ? "flex" : "hidden md:flex"} items-center ${isLanding ? "gap-2" : "gap-4"}`}>
             {user ? (
               <>
                 <div className="flex items-center gap-2 px-4 py-2 navbar-pill rounded-lg">
@@ -64,22 +63,6 @@ export default function Navbar({ variant = "default" }) {
                     Welcome, <span className="font-semibold text-white">{user.name}</span>
                   </span>
                 </div>
-
-                {user.role === "admin" ? (
-                  <Link
-                    href="/admin/dashboard"
-                    className="px-3 py-2 navbar-link-hover text-blue-50"
-                  >
-                    Admin Panel
-                  </Link>
-                ) : (
-                  <Link
-                    href="/dashboard"
-                    className="px-3 py-2 navbar-link-hover text-blue-50"
-                  >
-                    User Panel
-                  </Link>
-                )}
 
                 <button
                   onClick={handleLogout}
@@ -93,75 +76,49 @@ export default function Navbar({ variant = "default" }) {
               <>
                 <Link
                   href="/login"
-                  className="px-4 py-2 navbar-link-hover text-blue-50"
+                  className={isLanding ? "px-3 py-1.5 rounded-full border border-white/25 text-sm text-white hover:bg-white/15 transition duration-200" : "px-4 py-2 navbar-link-hover text-blue-50"}
                 >
                   Login
                 </Link>
-                <Link href="/signup" className="px-4 py-2 navbar-cta">
+                <Link
+                  href="/signup"
+                  className={isLanding ? "inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-white text-sm text-blue-700 font-semibold shadow-lg shadow-blue-500/20 hover:bg-slate-100 transition duration-200" : "px-4 py-2 navbar-cta"}
+                >
                   Sign Up
                 </Link>
               </>
             )}
           </div>
 
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 navbar-link-hover"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
 
-        {isOpen && (
-          <div className="md:hidden mt-4 space-y-2 animate-fade-in pb-2">
+        {!isLanding && (
+          <div className="flex flex-wrap items-center gap-3 md:hidden mt-4 justify-end">
             {user ? (
               <>
-                <div className="px-4 py-2 navbar-pill rounded-lg text-sm text-blue-50">
-                  Welcome, <span className="font-semibold text-white">{user.name}</span>
+                <div className="flex items-center justify-between gap-3 px-4 py-2 navbar-pill rounded-lg text-sm text-blue-50 w-full">
+                  <span>
+                    Welcome, <span className="font-semibold text-white">{user.name}</span>
+                  </span>
+                  <button
+                    onClick={handleLogout}
+                    className="btn btn-danger text-sm px-4 py-2"
+                  >
+                    Logout
+                  </button>
                 </div>
-
-                {user.role === "admin" ? (
-                  <Link
-                    href="/admin/dashboard"
-                    onClick={() => setIsOpen(false)}
-                    className="block px-4 py-2 navbar-link-hover text-blue-50"
-                  >
-                    Admin Panel
-                  </Link>
-                ) : (
-                  <Link
-                    href="/dashboard"
-                    onClick={() => setIsOpen(false)}
-                    className="block px-4 py-2 navbar-link-hover text-blue-50"
-                  >
-                    User Panel
-                  </Link>
-                )}
-
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setIsOpen(false);
-                  }}
-                  className="w-full btn btn-danger text-left"
-                >
-                  Logout
-                </button>
               </>
             ) : (
               <>
                 <Link
                   href="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-4 py-2 navbar-link-hover text-blue-50"
+                  className={isLanding ? "inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/25 text-white hover:bg-white/15 transition duration-200" : "inline-flex items-center justify-center px-4 py-2 navbar-link-hover text-blue-50"}
                 >
                   Login
                 </Link>
                 <Link
                   href="/signup"
-                  onClick={() => setIsOpen(false)}
-                  className="block px-4 py-2 navbar-cta text-center"
+                  className={isLanding ? "inline-flex items-center justify-center px-5 py-2 rounded-full bg-white text-blue-700 font-semibold shadow-lg shadow-blue-500/20 hover:bg-slate-100 transition duration-200" : "inline-flex items-center justify-center px-4 py-2 navbar-cta text-center"}
                 >
                   Sign Up
                 </Link>
