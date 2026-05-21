@@ -16,6 +16,9 @@ export default function TeamsPage() {
     name: "",
     email: "",
     password: "",
+    taskTitle: "",
+    taskDescription: "",
+    deadline: "",
   });
 
   const fetchMembers = useCallback(async () => {
@@ -37,7 +40,10 @@ export default function TeamsPage() {
   }, []);
 
   useEffect(() => {
-    fetchMembers();
+    async function loadMembers() {
+      await fetchMembers();
+    }
+    loadMembers();
   }, [fetchMembers]);
 
   const handleAddMember = async (e) => {
@@ -55,7 +61,7 @@ export default function TeamsPage() {
 
       if (response.ok) {
         toast.success(data.message || "Member added");
-        setForm({ name: "", email: "", password: "" });
+        setForm({ name: "", email: "", password: "", taskTitle: "", taskDescription: "", deadline: "" });
         setShowForm(false);
         await fetchMembers();
       } else {
@@ -168,6 +174,40 @@ export default function TeamsPage() {
                     <p className="text-xs text-gray-500 mt-1">
                       Member will use this password to log in and update their tasks.
                     </p>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="label">Task title (optional)</label>
+                    <input
+                      type="text"
+                      value={form.taskTitle}
+                      onChange={(e) => setForm({ ...form, taskTitle: e.target.value })}
+                      placeholder="Example: Prepare monthly report"
+                      className="input"
+                      disabled={loading}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="label">Task description (optional)</label>
+                    <textarea
+                      value={form.taskDescription}
+                      onChange={(e) => setForm({ ...form, taskDescription: e.target.value })}
+                      placeholder="Add notes or task details"
+                      className="input min-h-[120px] resize-none"
+                      disabled={loading}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="label">Deadline (optional)</label>
+                    <input
+                      type="date"
+                      value={form.deadline}
+                      onChange={(e) => setForm({ ...form, deadline: e.target.value })}
+                      className="input"
+                      disabled={loading}
+                    />
                   </div>
 
                   <button
